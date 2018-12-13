@@ -7,3 +7,18 @@ before_install:
 
 script:
   - docker run illitirit/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region:  "us-east-2"
+  app: docker-react
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-311231992147"
+  bucket_path: "docker-react"
+
+  #development will be done on feature branch.  Once pull request hits master TravisCI will deploy
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
